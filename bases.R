@@ -112,3 +112,31 @@ main_2010_df <-
     L_proj = round(162 * (1-W_pct_proj)),
     Wdiff = W - W_proj
   )
+
+
+# Phillies example
+
+phillies_df <- 
+  main_2010_df %>% 
+  filter(team == 'PHI') %>% 
+  transmute(
+    team,
+    R, 
+    RA,
+    diff_in_batting_cl = R_proj - R,
+    diff_in_pitching_cl = RA_proj - RA,
+    diff_in_batting_perf = -100,
+    diff_in_pitcher_perf = 26,
+    diff_in_bullpen = 25,
+    Proj_R = R + diff_in_batting_cl + diff_in_batting_perf,
+    Proj_RA = RA + diff_in_pitching_cl + diff_in_pitcher_perf + diff_in_bullpen,
+    W_pct_proj = Proj_R^1.81 / (Proj_R^1.81 + Proj_RA^1.81),
+    W_proj = round(162 * W_pct_proj),
+    L_proj = round(162 * (1-W_pct_proj)),
+    Wdiff = W - W_proj
+  )
+
+
+
+
+
